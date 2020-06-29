@@ -1,21 +1,21 @@
 import { expect as expectCDK, haveResource, SynthUtils } from '@aws-cdk/assert';
 import * as cdk from '@aws-cdk/core';
-import * as NodejsLambdaVersion from '../lib/index';
+import { Runtime } from '@aws-cdk/aws-lambda';
+import { NodejsLambdaVersion } from '../lib/index';
+import { join } from 'path';
 
-test('SQS Queue Created', () => {
-    const app = new cdk.App();
-    const stack = new cdk.Stack(app, "TestStack");
-    // WHEN
-    new NodejsLambdaVersion.NodejsLambdaVersion(stack, 'MyTestConstruct');
-    // THEN
-    expectCDK(stack).to(haveResource("AWS::SQS::Queue"));
-});
-
-test('SNS Topic Created', () => {
+describe('test', () => {
   const app = new cdk.App();
-  const stack = new cdk.Stack(app, "TestStack");
+  const stack = new cdk.Stack(app, 'TestStack');
   // WHEN
-  new NodejsLambdaVersion.NodejsLambdaVersion(stack, 'MyTestConstruct');
-  // THEN
-  expectCDK(stack).to(haveResource("AWS::SNS::Topic"));
+  new NodejsLambdaVersion(stack, 'MyTestConstruct', {
+    entry: join(__dirname, '/index.ts'),
+    functionName: `test`,
+    handler: 'handler',
+    runtime: Runtime.NODEJS_12_X,
+  });
+  it('should match snapshot', () => {
+    console.log(SynthUtils.toCloudFormation(stack));
+    expect(SynthUtils.toCloudFormation(stack)).toMatchSnapshot();
+  });
 });

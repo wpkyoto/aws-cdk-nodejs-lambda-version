@@ -1,19 +1,46 @@
 import * as cdk from '@aws-cdk/core';
+import { Version } from '@aws-cdk/aws-lambda';
+import { NodejsFunction, NodejsFunctionProps } from '@aws-cdk/aws-lambda-nodejs';
+import { createHash } from 'crypto';
+import { readFileSync } from 'fs';
 
-export interface NodejsLambdaVersionProps {
+
+export interface NodejsLambdaVersionProps extends NodejsFunctionProps {
   /**
-   * The visibility timeout to be configured on the SQS Queue, in seconds.
+   * Path to the entry file (JavaScript or TypeScript).
    *
-   * @default Duration.seconds(300)
+   * If the `NodejsFunction` is defined in `stack.ts` with `my-handler` as id
+   * (`new NodejsFunction(this, 'my-handler')`), the construct will look at `stack.my-handler.ts`
+   * and `stack.my-handler.js`.
    */
-  visibilityTimeout?: cdk.Duration;
+  entry: string;
 }
 
 export class NodejsLambdaVersion extends cdk.Construct {
-  /** @returns the ARN of the SQS queue */
-  public readonly queueArn: string;
+  /**
+   * Created Lambda Function
+   */
+  public readonly function: NodejsFunction
 
-  constructor(scope: cdk.Construct, id: string, props: NodejsLambdaVersionProps = {}) {
+  /**
+   * Function version
+   */
+  public readonly version: Version
+
+  constructor(scope: cdk.Construct, id: string, props: NodejsLambdaVersionProps) {
     super(scope, id);
+    console.log("called")
+    this.function = new NodejsFunction(
+      this,
+      `${id}NodeJSFunction`,
+      props
+    );
+
+    this.version = this.function.addVersion(
+      createHash('sha256')
+        .update(readFileSync(props.entry, 'utf-8'))
+        .digest('hex')
+    );
+
   }
 }

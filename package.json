@@ -9,6 +9,7 @@
     "lint": "tsdx lint",
     "test": "jest",
     "prepare": "tsc",
+    "cdk": "cdk",
     "clean": "npm run clean:resource && npm run clean:test",
     "clean:resource": "rimraf ./lib/***/*.js ./lib/***/*.d.ts",
     "clean:test": "rimraf ./test/***/*.js ./test/***/*.d.ts",
