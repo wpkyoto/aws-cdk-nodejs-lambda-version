@@ -4,3 +4,10 @@
 # CDK asset staging directory
 .cdk.staging
 cdk.out
+lib/lambda/.cache/
+test/
+*.config.js
+renovate.json
+.github/
+*.log
+example/

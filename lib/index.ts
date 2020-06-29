@@ -1,6 +1,3 @@
-import * as sns from '@aws-cdk/aws-sns';
-import * as subs from '@aws-cdk/aws-sns-subscriptions';
-import * as sqs from '@aws-cdk/aws-sqs';
 import * as cdk from '@aws-cdk/core';
 
 export interface NodejsLambdaVersionProps {
@@ -18,15 +15,5 @@ export class NodejsLambdaVersion extends cdk.Construct {
 
   constructor(scope: cdk.Construct, id: string, props: NodejsLambdaVersionProps = {}) {
     super(scope, id);
-
-    const queue = new sqs.Queue(this, 'NodejsLambdaVersionQueue', {
-      visibilityTimeout: props.visibilityTimeout || cdk.Duration.seconds(300)
-    });
-
-    const topic = new sns.Topic(this, 'NodejsLambdaVersionTopic');
-
-    topic.addSubscription(new subs.SqsSubscription(queue));
-
-    this.queueArn = queue.queueArn;
   }
 }
