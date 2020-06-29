@@ -1,0 +1,116 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`test should match snapshot 1`] = `
+Object {
+  "Parameters": Object {
+    "AssetParameterscdbf60bb1de1ec6027f8097f8a3439c94e00cdeccfd5c8d000764c8840d1dd32ArtifactHash3FE485FF": Object {
+      "Description": "Artifact hash for asset \\"cdbf60bb1de1ec6027f8097f8a3439c94e00cdeccfd5c8d000764c8840d1dd32\\"",
+      "Type": "String",
+    },
+    "AssetParameterscdbf60bb1de1ec6027f8097f8a3439c94e00cdeccfd5c8d000764c8840d1dd32S3Bucket42F24EDA": Object {
+      "Description": "S3 bucket for asset \\"cdbf60bb1de1ec6027f8097f8a3439c94e00cdeccfd5c8d000764c8840d1dd32\\"",
+      "Type": "String",
+    },
+    "AssetParameterscdbf60bb1de1ec6027f8097f8a3439c94e00cdeccfd5c8d000764c8840d1dd32S3VersionKey36395354": Object {
+      "Description": "S3 key for asset version \\"cdbf60bb1de1ec6027f8097f8a3439c94e00cdeccfd5c8d000764c8840d1dd32\\"",
+      "Type": "String",
+    },
+  },
+  "Resources": Object {
+    "MyTestConstructMyTestConstructNodeJSFunction700F25A7": Object {
+      "DependsOn": Array [
+        "MyTestConstructMyTestConstructNodeJSFunctionServiceRoleBAB50534",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "S3Bucket": Object {
+            "Ref": "AssetParameterscdbf60bb1de1ec6027f8097f8a3439c94e00cdeccfd5c8d000764c8840d1dd32S3Bucket42F24EDA",
+          },
+          "S3Key": Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                Object {
+                  "Fn::Select": Array [
+                    0,
+                    Object {
+                      "Fn::Split": Array [
+                        "||",
+                        Object {
+                          "Ref": "AssetParameterscdbf60bb1de1ec6027f8097f8a3439c94e00cdeccfd5c8d000764c8840d1dd32S3VersionKey36395354",
+                        },
+                      ],
+                    },
+                  ],
+                },
+                Object {
+                  "Fn::Select": Array [
+                    1,
+                    Object {
+                      "Fn::Split": Array [
+                        "||",
+                        Object {
+                          "Ref": "AssetParameterscdbf60bb1de1ec6027f8097f8a3439c94e00cdeccfd5c8d000764c8840d1dd32S3VersionKey36395354",
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            ],
+          },
+        },
+        "FunctionName": "test",
+        "Handler": "index.handler",
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "MyTestConstructMyTestConstructNodeJSFunctionServiceRoleBAB50534",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs12.x",
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "MyTestConstructMyTestConstructNodeJSFunctionServiceRoleBAB50534": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "MyTestConstructMyTestConstructNodeJSFunctionVersion062ee3e8f4a8046627161501ac2d59558bf42479f85b2065d65b464bddf62221AD6E26FB": Object {
+      "Properties": Object {
+        "FunctionName": Object {
+          "Ref": "MyTestConstructMyTestConstructNodeJSFunction700F25A7",
+        },
+      },
+      "Type": "AWS::Lambda::Version",
+    },
+  },
+}
+`;

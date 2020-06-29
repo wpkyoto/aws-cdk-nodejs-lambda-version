@@ -29,7 +29,6 @@ export class NodejsLambdaVersion extends cdk.Construct {
 
   constructor(scope: cdk.Construct, id: string, props: NodejsLambdaVersionProps) {
     super(scope, id);
-    console.log("called")
     this.function = new NodejsFunction(
       this,
       `${id}NodeJSFunction`,
