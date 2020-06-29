@@ -26,6 +26,12 @@
     "type": "git",
     "url": "https://github.com/wpkyoto/nodejs-lambda-version.git"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
       "tsdx lint --fix",
